@@ -10,11 +10,10 @@
 
 """
 
-import numpy as np
-import pandas as pd
-from simrel.utilities import *
+from utilities import *
 
 
+# noinspection PyUnresolvedReferences
 class Simrel(object):
     """Base class only containing common parameters and methods to compute common
     properties
@@ -42,6 +41,9 @@ class Simrel(object):
             'rsq': None,  # Coefficient of determination
             'sim_type': None,  # Type of simulation: univariate, bivariate, multivariate
         }
+        for key, value in args.items():
+            setattr(self, key, value)
+
         for key, value in kwargs.items():
             setattr(self, key, value)
 
@@ -190,11 +192,10 @@ class Simrel(object):
         mu_x = self.mu_x
         mu_y = self.mu_y
         ntest = self.ntest
-        test = None
         out = dict()
-        if (data_type in ['train', 'both']):
+        if data_type in ['train', 'both']:
             out['train'] = simulate(nobs, npred, sigma, rotation_x, nresp, rotation_y, mu_x, mu_y)
-        if (data_type in ['test', 'both'] and ntest is not None):
+        if data_type in ['test', 'both'] and ntest is not None:
             out['test'] = simulate(ntest, npred, sigma, rotation_x, nresp, rotation_y, mu_x, mu_y)
         return out
 
@@ -243,7 +244,7 @@ class Unisimrel(Simrel):
 
     """
 
-    def __init__(self, nobs=100, npred=20, nrelpred=7, relpos=[1, 3, 4, 6],
+    def __init__(self, nobs=100, npred=20, nrelpred=7, relpos=(1, 3, 4, 6),
                  gamma=0.8, rsq=0.9, sim_type='univariate', **kwargs):
         """This function initilize all the arguments and also compute properties when the object is initiated. However this will not simulate the data. To simulate the data from using the computed properties, one need to use ``get_data`` method.
 
@@ -388,4 +389,3 @@ class Unisimrel(Simrel):
         """
 
         return self.sigma_w - self.rsq_y
-

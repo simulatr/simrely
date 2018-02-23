@@ -1,4 +1,10 @@
-"""This file contains all the utility functions required for simulation
+"""This file contains all the utility functions required for
+simulation
+
+.. module:: utilities
+    :synopsis: unility functions used in simulation
+
+.. moduleauthor:: Raju Rimal <raju.rimal@nmbu.no>
 
 """
 
@@ -10,14 +16,20 @@ def get_cov(pos, rsq, eta, p, lmd):
     """Compute covariance from given parameters
 
     Args:
-        pos: Position of relevant components
-        rsq: Coefficient of determination
-        eta: Decay factor of eigenvalues corresponding to response matrix
-        p: Number of predictor variables
-        lmd: Decay factor of eigenvalues corresponding ot predictor matrix
+        pos (list): Position of relevant components
+        rsq (list): Coefficient of determination
+        eta (float): Decay factor of eigenvalues corresponding to response matrix
+        p (int): Number of predictor variables
+        lmd (list): Decay factor of eigenvalues corresponding ot predictor matrix
 
     Returns:
-        A covariance value with non-zero at position defined at ``pos`` and zero at other places
+        A covariance value with non-zero at position defined at
+        ``pos`` and zero at other places
+
+    >>> len(get_cov([1, 2, 3], 0.8, 1, 5, [1.  , 0.5 , 0.25, 0.12, 0.06]))
+    5
+
+    This always return an array of length equals to length of predictor
 
     """
     pos = [x - 1 for x in pos]
@@ -32,10 +44,15 @@ def get_rotate(pred_pos):
     """Gives a rotation matrix: a random standard normal variates
 
     Args:
-        pred_pos: A list of position
+        pred_pos(list): A list of position
 
     Returns:
         A two dimensional array of rows and columns equal to the length of ``pred_pos``.
+
+    >>> a = get_rotate([1, 3, 4, 5])
+    >>> np.all(np.matmul(a, a.T).round(2) == np.eye(len([1, 3, 4, 5])))
+    True
+
 
     """
 

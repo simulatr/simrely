@@ -4,24 +4,24 @@ simrel package
 Submodules
 ----------
 
-simrel\.simrel module
----------------------
+simrel.simrel module
+--------------------
 
 .. automodule:: simrel.simrel
     :members:
     :undoc-members:
     :show-inheritance:
 
-simrel\.utilities module
-------------------------
+simrel.utilities module
+-----------------------
 
 .. automodule:: simrel.utilities
     :members:
     :undoc-members:
     :show-inheritance:
 
-simrel\.version module
-----------------------
+simrel.version module
+---------------------
 
 .. automodule:: simrel.version
     :members:
