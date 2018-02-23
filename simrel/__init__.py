@@ -1,3 +1,10 @@
+# -*- coding: utf-8 -*-
+
+""" Sirmel is a package for simulating linear model data
 """
-The __init__ file of the python library
-"""
+
+
+# Import built-in modules first, followed by third-party modules,
+# followed by any changes to the path and your own modules.
+
+# from utilities import *

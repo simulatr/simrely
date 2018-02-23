@@ -349,5 +349,3 @@ class Unisimrel(Simrel):
 
         return self.sigma_w - self.rsq_y
 
-sobj = Unisimrel()
-train = sobj.get_data("train")
