@@ -16,5 +16,3 @@ __pycache__/
 .vscode/
 venv/
 simrel/__pycache__
-conf.py
-docs/
