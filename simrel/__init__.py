@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 
-""" Sirmel is a package for simulating linear model data
+""" Simrel is a package for simulating linear model data
 """
 
 
