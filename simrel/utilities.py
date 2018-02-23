@@ -1,5 +1,5 @@
-"""
-This file contains all the utility functions required for simulation
+"""This file contains all the utility functions required for simulation
+
 """
 
 import numpy as np
@@ -7,8 +7,7 @@ import pandas as pd
 
 
 def get_cov(pos, rsq, eta, p, lmd):
-    """
-    Compute covariance from given parameters
+    """Compute covariance from given parameters
 
     Args:
         pos: Position of relevant components
@@ -19,6 +18,7 @@ def get_cov(pos, rsq, eta, p, lmd):
 
     Returns:
         A covariance value with non-zero at position defined at ``pos`` and zero at other places
+
     """
     pos = [x - 1 for x in pos]
     out = np.zeros(p)
@@ -29,15 +29,16 @@ def get_cov(pos, rsq, eta, p, lmd):
 
 
 def get_rotate(pred_pos):
-    """
-    Gives a rotation matrix: a random standard normal variates
+    """Gives a rotation matrix: a random standard normal variates
 
     Args:
         pred_pos: A list of position
 
     Returns:
         A two dimensional array of rows and columns equal to the length of ``pred_pos``.
+
     """
+
     n = len(pred_pos)
     q_mat = np.random.standard_normal((n, n))
     q_mat_scaled = q_mat - q_mat.mean(axis=1)[:, None]
@@ -46,7 +47,7 @@ def get_rotate(pred_pos):
 
 
 def simulate(nobs, npred, sigma, rotation_x, nresp=1, rotation_y=None, mu_x=None, mu_y=None):
-    """
+    """Simulation function
 
     Args:
         nobs: Number of observations to simulate
@@ -60,6 +61,7 @@ def simulate(nobs, npred, sigma, rotation_x, nresp=1, rotation_y=None, mu_x=None
 
     Returns:
         A simulated data as a pandas dataframe with response followed by predictor as columns of the dataframe
+
     """
     rotate_y = False if rotation_y is None else True
     sigma_rot = np.linalg.cholesky(sigma)
@@ -78,7 +80,8 @@ def simulate(nobs, npred, sigma, rotation_x, nresp=1, rotation_y=None, mu_x=None
 
 
 def predpos(p, q, relpos):
-    """
+    """Position of relevant predictors
+
     Args:
         p: Size of population from where the extra relevant position are sampled (integer)
         q: Size of relevant predictors for each response variables/ components (in list)
@@ -86,7 +89,9 @@ def predpos(p, q, relpos):
 
     Returns:
         A dictionary with relevant (*rel*) and irrelevant (*irrel*) positions
+
     """
+
     relpos_set = [set(x) for x in relpos]
     irrelpos = set(range(p)) - set.union(*relpos_set)
     out = []

@@ -7,16 +7,18 @@
     more in discription of relevant classes
     :copyright: (c) 2018 by Raju Rimal
     :license: MIT, see LICENSE for more details.
+
 """
 
 import numpy as np
 import pandas as pd
-from utilities import *
+from simrel.utilities import *
 
 
 class Simrel(object):
     """Base class only containing common parameters and methods to compute common
     properties
+
     """
 
     def __init__(self, **kwargs):
@@ -25,9 +27,10 @@ class Simrel(object):
         some of the methods for computing properties of simrel object
         
         Parameters:
-        ----------
+        -------------
         **kwargs :
             All the possible parameters values accepted by their name. The individual child class will discuss on the arguments in details.
+
         """
 
         args = {
@@ -60,6 +63,7 @@ class Simrel(object):
         -------
         An array
             Eigenvalues equals to the length of number of predictor/response
+
         """
 
         if predictor is True:
@@ -78,6 +82,7 @@ class Simrel(object):
         -------
         An array
             A diagonal matrix (as array data-type) with eigenvalues of predictors in its diagonal
+
         """
 
         try:
@@ -94,6 +99,7 @@ class Simrel(object):
         -------
         An array
             A diagonal matrix (as array data-type) with eigenvalues of responses in its diagonal
+
         """
 
         try:
@@ -110,6 +116,7 @@ class Simrel(object):
         -------
         A numpy array
             Diagonal matrix in an array data type is returned as an inverse of ``sigma_z``
+
         """
 
         try:
@@ -126,6 +133,7 @@ class Simrel(object):
         -------
         An array
             An array as a variance-covariance matrix of joint distribution of responses and predictors
+
         """
 
         if not hasattr(self, 'sigma_zw'):
@@ -147,6 +155,7 @@ class Simrel(object):
         -------
         A dictionary
             With two elements: ``irrel`` contains a list of irrelevant positon and ``rel`` contains list of list of relevant positions corresponding to each response variables (components)
+
         """
 
         predpos_ = predpos(self.npred, [self.nrelpred], [self.relpos])
@@ -158,13 +167,17 @@ class Simrel(object):
         """Uses ``simulate`` utility function to simulate data
         
         Parameters:
-        ----------
+        -------------
+
         data_type : {character}
             Can take values: ``train``, ``test`` or ``both``. If only ``train`` is specified will only simulate training samples even if number of test observation is specified in the argument
+
         Returns
         -------
+
         A dictionary with pandas DataFrame
             The dictionary contains two elements at most: ``train`` and ``test`` each as pandas DataFrame. The DataFrame contains ``nobs`` (for training) and ``ntest`` (for test) samples observation with columns with names ``Y1``, ``Y2`` so on for response and ``X1``, ``X2`` and so on for predictors
+
         """
 
         sigma = self.sigma
@@ -187,33 +200,53 @@ class Simrel(object):
 
 
 class Unisimrel(Simrel):
-    """
-    This class is responsible for uniresponse simulation, i.e. with one response variable. This is heaviely dependent of the properties and methods of its parent class. The parameters required for this class are as follows:
-        nobs: 
-            100 (default) Number of training observations to simulate
-        npred: 
-            20 (default) Number of predictor variables
-        nrelpred: 
-            7 (default) Number of relevant predictor the the response variable
-        relpos: 
-            [1, 3, 4, 6] (default) Position of relevant components for the response
-        gamma: 
-            0.8 (default) Exponential decay factor of eigenvalues corresponding to predictors
-        rsq: 
-            0.8 (default) Coefficient of determination
-        sim_type: 
-            'univariate' (default) Can only take this value for this class
-        ntest: 
-            None (default) Number of test observations
-        mu_x: 
-            None (default) A list of average values for each predictor variable
-        mu_y: 
-            None (default) A list with average value for the response. In this case it will be a list  of one element
+    """This class is responsible for uniresponse simulation, i.e. with one response variable. This is heaviely dependent of the properties and methods of its parent class. The parameters required for this class are as follows:
+
+    PARAMETERS
+    ------------
+
+    nobs: integer
+        100 (default) Number of training observations to simulate
+
+    npred: integer
+        20 (default) Number of predictor variables
+
+    nrelpred: a list
+        7 (default) Number of relevant predictor the the response variable
+
+    relpos: a list
+        [1, 3, 4, 6] (default) Position of relevant components for the response
+
+    gamma: float
+        0.8 (default) Exponential decay factor of eigenvalues corresponding to predictors
+
+    rsq: list
+        0.8 (default) Coefficient of determination
+
+    sim_type: string
+        'univariate' (default) Can only take this value for this class
+
+    ntest: integer
+        None (default) Number of test observations
+
+    mu_x: list
+        None (default) A list of average values for each predictor variable
+
+    mu_y: list
+        None (default) A list with average value for the response. In this case it will be a list  of one element
+
+    RETURNS
+    --------
+
+    class
+        A simrel class
+
     """
 
     def __init__(self, nobs=100, npred=20, nrelpred=7, relpos=[1, 3, 4, 6],
                  gamma=0.8, rsq=0.9, sim_type='univariate', **kwargs):
         """This function initilize all the arguments and also compute properties when the object is initiated. However this will not simulate the data. To simulate the data from using the computed properties, one need to use ``get_data`` method.
+
         """
 
         # Assigning Attributes which might get replaced when calling parent constructor
@@ -253,8 +286,10 @@ class Unisimrel(Simrel):
         
         Returns
         -------
+
         A numpy array
             The array with dimension of ``nresp`` (1) by ``npred`` containing non-zero elements at the position of relevant components and zero at other places.
+
         """
 
         if not hasattr(self, 'eigen_x'):
@@ -268,8 +303,10 @@ class Unisimrel(Simrel):
         
         Returns
         -------
+
         A numpy array
             The arrary will of of size ``npred`` times ``npred``. 
+
         """
 
         relpred = self.relpred
@@ -288,8 +325,10 @@ class Unisimrel(Simrel):
         
         Returns
         -------
+
         A numpy array
             The array contains non-zero regression coefficints where the components are relevant and zero otherwise
+
         """
 
         return np.matmul(self.sigma_zinv, self.sigma_zw)
@@ -299,8 +338,10 @@ class Unisimrel(Simrel):
         
         Returns
         -------
+
         A numpy array
             An array of true regression coefficient of size equals to ``npred``.
+
         """
 
         return np.matmul(self.rotation_x, self.beta_z)
@@ -310,8 +351,10 @@ class Unisimrel(Simrel):
         
         Returns
         -------
+
         An array
             The array contains the intercept terms of the regression model. The default is zero if both ``mu_y`` and ``mu_x`` are None. In this particular class, the array only contains one element
+
         """
 
         beta0 = np.zeros((self.nresp,))
@@ -325,8 +368,10 @@ class Unisimrel(Simrel):
         
         Returns
         -------
+
         An array
             The array contains single element containing coefficient of determination for the response variable
+
         """
 
         return np.matmul(self.beta_z.T, self.sigma_zw)
@@ -336,8 +381,10 @@ class Unisimrel(Simrel):
 
         Returns
         -------
+
         An array
             For this uniresponse simulation it only contains one element
+
         """
 
         return self.sigma_w - self.rsq_y

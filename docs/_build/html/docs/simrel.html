@@ -1,0 +1,645 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>simrel package &mdash; simrel 0.5.4 documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  
+  
+    <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  
+
+  
+
+  
+        <link rel="index" title="Index"
+              href="../genindex.html"/>
+        <link rel="search" title="Search" href="../search.html"/>
+    <link rel="top" title="simrel 0.5.4 documentation" href="../index.html"/> 
+
+  
+  <script src="../_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+   
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="../index.html" class="icon icon-home"> simrel
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                0.5.4
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <!-- Local TOC -->
+              <div class="local-toc"><ul>
+<li><a class="reference internal" href="#">simrel package</a><ul>
+<li><a class="reference internal" href="#submodules">Submodules</a></li>
+<li><a class="reference internal" href="#module-simrel.simrel">simrel.simrel module</a><ul>
+<li><a class="reference internal" href="#simrel">simrel</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#module-simrel.utilities">simrel.utilities module</a></li>
+<li><a class="reference internal" href="#module-simrel.version">simrel.version module</a></li>
+<li><a class="reference internal" href="#module-simrel">Module contents</a></li>
+</ul>
+</li>
+</ul>
+</div>
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">simrel</a>
+        
+      </nav>
+
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../index.html">Docs</a> &raquo;</li>
+        
+      <li>simrel package</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="../_sources/docs/simrel.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="simrel-package">
+<h1>simrel package<a class="headerlink" href="#simrel-package" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="submodules">
+<h2>Submodules<a class="headerlink" href="#submodules" title="Permalink to this headline">¶</a></h2>
+</div>
+<div class="section" id="module-simrel.simrel">
+<span id="simrel-simrel-module"></span><h2>simrel.simrel module<a class="headerlink" href="#module-simrel.simrel" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="simrel">
+<h3>simrel<a class="headerlink" href="#simrel" title="Permalink to this headline">¶</a></h3>
+<p>This simrel library can be used to simulate a linear model data with 1, 2, or many response variables.
+With few parameters, simrel can simulate data with wide range of properties. The parameters will be discussed
+more in discription of relevant classes
+:copyright: (c) 2018 by Raju Rimal
+:license: MIT, see LICENSE for more details.</p>
+<dl class="class">
+<dt id="simrel.simrel.Simrel">
+<em class="property">class </em><code class="descclassname">simrel.simrel.</code><code class="descname">Simrel</code><span class="sig-paren">(</span><em>**kwargs</em><span class="sig-paren">)</span><a class="headerlink" href="#simrel.simrel.Simrel" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal"><span class="pre">object</span></code></p>
+<p>Base class only containing common parameters and methods to compute common
+properties</p>
+<dl class="method">
+<dt id="simrel.simrel.Simrel.__init__">
+<code class="descname">__init__</code><span class="sig-paren">(</span><em>**kwargs</em><span class="sig-paren">)</span><a class="headerlink" href="#simrel.simrel.Simrel.__init__" title="Permalink to this definition">¶</a></dt>
+<dd><p>Take parameters from the initiated object and set some of those as an
+attributes of the object itself. These attributes will also be used by
+some of the methods for computing properties of simrel object</p>
+<dl class="docutils">
+<dt><a href="#id1"><span class="problematic" id="id2">**</span></a>kwargs :</dt>
+<dd>All the possible parameters values accepted by their name. The individual child class will discuss on the arguments in details.</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="simrel.simrel.Simrel.get_data">
+<code class="descname">get_data</code><span class="sig-paren">(</span><em>data_type</em><span class="sig-paren">)</span><a class="headerlink" href="#simrel.simrel.Simrel.get_data" title="Permalink to this definition">¶</a></dt>
+<dd><p>Uses <code class="docutils literal"><span class="pre">simulate</span></code> utility function to simulate data</p>
+<dl class="docutils">
+<dt>data_type <span class="classifier-delimiter">:</span> <span class="classifier">{character}</span></dt>
+<dd>Can take values: <code class="docutils literal"><span class="pre">train</span></code>, <code class="docutils literal"><span class="pre">test</span></code> or <code class="docutils literal"><span class="pre">both</span></code>. If only <code class="docutils literal"><span class="pre">train</span></code> is specified will only simulate training samples even if number of test observation is specified in the argument</dd>
+</dl>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">The dictionary contains two elements at most: <code class="docutils literal"><span class="pre">train</span></code> and <code class="docutils literal"><span class="pre">test</span></code> each as pandas DataFrame. The DataFrame contains <code class="docutils literal"><span class="pre">nobs</span></code> (for training) and <code class="docutils literal"><span class="pre">ntest</span></code> (for test) samples observation with columns with names <code class="docutils literal"><span class="pre">Y1</span></code>, <code class="docutils literal"><span class="pre">Y2</span></code> so on for response and <code class="docutils literal"><span class="pre">X1</span></code>, <code class="docutils literal"><span class="pre">X2</span></code> and so on for predictors</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body">A dictionary with pandas DataFrame</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="simrel.simrel.Simrel.get_eigen">
+<code class="descname">get_eigen</code><span class="sig-paren">(</span><em>predictor=True</em><span class="sig-paren">)</span><a class="headerlink" href="#simrel.simrel.Simrel.get_eigen" title="Permalink to this definition">¶</a></dt>
+<dd><p>Compute eigenvalues based on the <code class="docutils literal"><span class="pre">gamma</span></code> or <code class="docutils literal"><span class="pre">eta</span></code> parameters using following expression</p>
+<blockquote>
+<div><p>For predictor:</p>
+<p>math:: lambda_i = e^{-gamma(i - 1)}, gamma &gt;0    ext{ and } i = 1, 2, ldots, p</p>
+<p>For response:</p>
+<p>math:: kappa_j = e^{-eta(j - 1)}, eta &gt;0         ext{ and } j = 1, 2, ldots, m</p>
+</div></blockquote>
+<dl class="docutils">
+<dt>predictor :</dt>
+<dd>Computes eigenvalues of predictor is true using <code class="docutils literal"><span class="pre">gamma</span></code> paramters else computes eigenvalues corresponding to response using <code class="docutils literal"><span class="pre">eta</span></code> parameters, defaults to True (‘predictors’)</dd>
+</dl>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">Eigenvalues equals to the length of number of predictor/response</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body">An array</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="simrel.simrel.Simrel.get_relpred">
+<code class="descname">get_relpred</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#simrel.simrel.Simrel.get_relpred" title="Permalink to this definition">¶</a></dt>
+<dd><p>Computes (identifies) the position of relevant and irrelevant positions of predictor variables. Since the number of relevant predictors are given in argument <code class="docutils literal"><span class="pre">q</span></code>, it will use position specified in <code class="docutils literal"><span class="pre">relpos</span></code> and sample remaining position from total availiable position to fill <code class="docutils literal"><span class="pre">q</span></code>.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">With two elements: <code class="docutils literal"><span class="pre">irrel</span></code> contains a list of irrelevant positon and <code class="docutils literal"><span class="pre">rel</span></code> contains list of list of relevant positions corresponding to each response variables (components)</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body">A dictionary</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="simrel.simrel.Simrel.get_sigma">
+<code class="descname">get_sigma</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#simrel.simrel.Simrel.get_sigma" title="Permalink to this definition">¶</a></dt>
+<dd><p>Concatinate the variance and variance-covariance matrices</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">An array as a variance-covariance matrix of joint distribution of responses and predictors</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body">An array</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="simrel.simrel.Simrel.get_sigmaw">
+<code class="descname">get_sigmaw</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#simrel.simrel.Simrel.get_sigmaw" title="Permalink to this definition">¶</a></dt>
+<dd><p>Compute variance-covariance matrix of latent components of response</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">A diagonal matrix (as array data-type) with eigenvalues of responses in its diagonal</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body">An array</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="simrel.simrel.Simrel.get_sigmaz">
+<code class="descname">get_sigmaz</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#simrel.simrel.Simrel.get_sigmaz" title="Permalink to this definition">¶</a></dt>
+<dd><p>Compute variance-covariance matrix of latent components of predictors</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">A diagonal matrix (as array data-type) with eigenvalues of predictors in its diagonal</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body">An array</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="simrel.simrel.Simrel.get_sigmazinv">
+<code class="descname">get_sigmazinv</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#simrel.simrel.Simrel.get_sigmazinv" title="Permalink to this definition">¶</a></dt>
+<dd><p>Compute the inverse of <code class="docutils literal"><span class="pre">sigmaz</span></code> (eigenvalue matrix of predictors) just by taking inverse of eigenvalues</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">Diagonal matrix in an array data type is returned as an inverse of <code class="docutils literal"><span class="pre">sigma_z</span></code></td>
+</tr>
+<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body">A numpy array</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="simrel.simrel.Unisimrel">
+<em class="property">class </em><code class="descclassname">simrel.simrel.</code><code class="descname">Unisimrel</code><span class="sig-paren">(</span><em>nobs=100, npred=20, nrelpred=7, relpos=[1, 3, 4, 6], gamma=0.8, rsq=0.9, sim_type='univariate', **kwargs</em><span class="sig-paren">)</span><a class="headerlink" href="#simrel.simrel.Unisimrel" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#simrel.simrel.Simrel" title="simrel.simrel.Simrel"><code class="xref py py-class docutils literal"><span class="pre">simrel.simrel.Simrel</span></code></a></p>
+<p>This class is responsible for uniresponse simulation, i.e. with one response variable. This is heaviely dependent of the properties and methods of its parent class. The parameters required for this class are as follows:</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>nobs</strong> (<em>integer</em>) – 100 (default) Number of training observations to simulate</li>
+<li><strong>npred</strong> (<em>integer</em>) – 20 (default) Number of predictor variables</li>
+<li><strong>nrelpred</strong> (<em>a list</em>) – 7 (default) Number of relevant predictor the the response variable</li>
+<li><strong>relpos</strong> (<em>a list</em>) – [1, 3, 4, 6] (default) Position of relevant components for the response</li>
+<li><strong>gamma</strong> (<em>float</em>) – 0.8 (default) Exponential decay factor of eigenvalues corresponding to predictors</li>
+<li><strong>rsq</strong> (<em>list</em>) – 0.8 (default) Coefficient of determination</li>
+<li><strong>sim_type</strong> (<em>string</em>) – ‘univariate’ (default) Can only take this value for this class</li>
+<li><strong>ntest</strong> (<em>integer</em>) – None (default) Number of test observations</li>
+<li><strong>mu_x</strong> (<em>list</em>) – None (default) A list of average values for each predictor variable</li>
+<li><strong>mu_y</strong> (<em>list</em>) – None (default) A list with average value for the response. In this case it will be a list  of one element</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">A simrel class</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">class</p>
+</td>
+</tr>
+</tbody>
+</table>
+<dl class="method">
+<dt id="simrel.simrel.Unisimrel.__init__">
+<code class="descname">__init__</code><span class="sig-paren">(</span><em>nobs=100, npred=20, nrelpred=7, relpos=[1, 3, 4, 6], gamma=0.8, rsq=0.9, sim_type='univariate', **kwargs</em><span class="sig-paren">)</span><a class="headerlink" href="#simrel.simrel.Unisimrel.__init__" title="Permalink to this definition">¶</a></dt>
+<dd><p>This function initilize all the arguments and also compute properties when the object is initiated. However this will not simulate the data. To simulate the data from using the computed properties, one need to use <code class="docutils literal"><span class="pre">get_data</span></code> method.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="simrel.simrel.Unisimrel.get_beta">
+<code class="descname">get_beta</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#simrel.simrel.Unisimrel.get_beta" title="Permalink to this definition">¶</a></dt>
+<dd><p>Regression coefficients corresponding to the simulated data</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">An array of true regression coefficient of size equals to <code class="docutils literal"><span class="pre">npred</span></code>.</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body">A numpy array</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="simrel.simrel.Unisimrel.get_beta0">
+<code class="descname">get_beta0</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#simrel.simrel.Unisimrel.get_beta0" title="Permalink to this definition">¶</a></dt>
+<dd><p>Intercept term</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">The array contains the intercept terms of the regression model. The default is zero if both <code class="docutils literal"><span class="pre">mu_y</span></code> and <code class="docutils literal"><span class="pre">mu_x</span></code> are None. In this particular class, the array only contains one element</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body">An array</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="simrel.simrel.Unisimrel.get_beta_z">
+<code class="descname">get_beta_z</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#simrel.simrel.Unisimrel.get_beta_z" title="Permalink to this definition">¶</a></dt>
+<dd><p>Regression coefficients corresponding to principal components.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">The array contains non-zero regression coefficints where the components are relevant and zero otherwise</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body">A numpy array</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="simrel.simrel.Unisimrel.get_minerror">
+<code class="descname">get_minerror</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#simrel.simrel.Unisimrel.get_minerror" title="Permalink to this definition">¶</a></dt>
+<dd><p>Minimum error of the model, for this uniresponse simulation it is the difference between total variation in response <code class="docutils literal"><span class="pre">sigma_w</span></code> and coefficient of determination <code class="docutils literal"><span class="pre">rsq_y</span></code></p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">For this uniresponse simulation it only contains one element</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body">An array</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="simrel.simrel.Unisimrel.get_rsq_y">
+<code class="descname">get_rsq_y</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#simrel.simrel.Unisimrel.get_rsq_y" title="Permalink to this definition">¶</a></dt>
+<dd><p>Compute the coefficient of determination from <code class="docutils literal"><span class="pre">beta_z</span></code> and <code class="docutils literal"><span class="pre">sigma_zw</span></code>. This is the true coefficient of simulated data which will resembles input <code class="docutils literal"><span class="pre">rsq</span></code> parameter</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">The array contains single element containing coefficient of determination for the response variable</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body">An array</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="simrel.simrel.Unisimrel.get_sigma_zw">
+<code class="descname">get_sigma_zw</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#simrel.simrel.Unisimrel.get_sigma_zw" title="Permalink to this definition">¶</a></dt>
+<dd><p>Compute the covariance between principal components of predictors and response variable satisfying all the input value of <code class="docutils literal"><span class="pre">relpos</span></code>, <code class="docutils literal"><span class="pre">rsq</span></code>, <code class="docutils literal"><span class="pre">npred</span></code> and <code class="docutils literal"><span class="pre">gamma</span></code></p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">The array with dimension of <code class="docutils literal"><span class="pre">nresp</span></code> (1) by <code class="docutils literal"><span class="pre">npred</span></code> containing non-zero elements at the position of relevant components and zero at other places.</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body">A numpy array</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="simrel.simrel.Unisimrel.rotate_pred">
+<code class="descname">rotate_pred</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#simrel.simrel.Unisimrel.rotate_pred" title="Permalink to this definition">¶</a></dt>
+<dd><p>A rotation matrix for predictor is generated. This rotation matrix is used as a eigenvector matrix which will rotates the principal components to obtain predictor variables.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">The arrary will of of size <code class="docutils literal"><span class="pre">npred</span></code> times <code class="docutils literal"><span class="pre">npred</span></code>.</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body">A numpy array</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+</div>
+<div class="section" id="module-simrel.utilities">
+<span id="simrel-utilities-module"></span><h2>simrel.utilities module<a class="headerlink" href="#module-simrel.utilities" title="Permalink to this headline">¶</a></h2>
+<p>This file contains all the utility functions required for simulation</p>
+<dl class="function">
+<dt id="simrel.utilities.get_cov">
+<code class="descclassname">simrel.utilities.</code><code class="descname">get_cov</code><span class="sig-paren">(</span><em>pos</em>, <em>rsq</em>, <em>eta</em>, <em>p</em>, <em>lmd</em><span class="sig-paren">)</span><a class="headerlink" href="#simrel.utilities.get_cov" title="Permalink to this definition">¶</a></dt>
+<dd><p>Compute covariance from given parameters</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>pos</strong> – Position of relevant components</li>
+<li><strong>rsq</strong> – Coefficient of determination</li>
+<li><strong>eta</strong> – Decay factor of eigenvalues corresponding to response matrix</li>
+<li><strong>p</strong> – Number of predictor variables</li>
+<li><strong>lmd</strong> – Decay factor of eigenvalues corresponding ot predictor matrix</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">A covariance value with non-zero at position defined at <code class="docutils literal"><span class="pre">pos</span></code> and zero at other places</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="simrel.utilities.get_rotate">
+<code class="descclassname">simrel.utilities.</code><code class="descname">get_rotate</code><span class="sig-paren">(</span><em>pred_pos</em><span class="sig-paren">)</span><a class="headerlink" href="#simrel.utilities.get_rotate" title="Permalink to this definition">¶</a></dt>
+<dd><p>Gives a rotation matrix: a random standard normal variates</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>pred_pos</strong> – A list of position</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">A two dimensional array of rows and columns equal to the length of <code class="docutils literal"><span class="pre">pred_pos</span></code>.</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="simrel.utilities.predpos">
+<code class="descclassname">simrel.utilities.</code><code class="descname">predpos</code><span class="sig-paren">(</span><em>p</em>, <em>q</em>, <em>relpos</em><span class="sig-paren">)</span><a class="headerlink" href="#simrel.utilities.predpos" title="Permalink to this definition">¶</a></dt>
+<dd><p>Position of relevant predictors</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>p</strong> – Size of population from where the extra relevant position are sampled (integer)</li>
+<li><strong>q</strong> – Size of relevant predictors for each response variables/ components (in list)</li>
+<li><strong>relpos</strong> – Position of relevant components required for each response variables/ components (in list)</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">A dictionary with relevant (<em>rel</em>) and irrelevant (<em>irrel</em>) positions</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="simrel.utilities.simulate">
+<code class="descclassname">simrel.utilities.</code><code class="descname">simulate</code><span class="sig-paren">(</span><em>nobs</em>, <em>npred</em>, <em>sigma</em>, <em>rotation_x</em>, <em>nresp=1</em>, <em>rotation_y=None</em>, <em>mu_x=None</em>, <em>mu_y=None</em><span class="sig-paren">)</span><a class="headerlink" href="#simrel.utilities.simulate" title="Permalink to this definition">¶</a></dt>
+<dd><p>Simulation function</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>nobs</strong> – Number of observations to simulate</li>
+<li><strong>npred</strong> – Number of predictor variables</li>
+<li><strong>sigma</strong> – A variance-covariance matrix of joint distribution of response and predictor</li>
+<li><strong>rotation_x</strong> – An orthogonal matrix which will act as rotation matrix (eigenvector matrix) of predictors</li>
+<li><strong>nresp</strong> – Number of response variables</li>
+<li><strong>rotation_y</strong> – An orthogonal matrix will act as rotation matrix (eigenvector matrix) of response (default: None)</li>
+<li><strong>mu_x</strong> – An array equals to <code class="docutils literal"><span class="pre">npred</span></code> as a mean of the predictors (default: None, i.e, 0)</li>
+<li><strong>mu_y</strong> – An array equals to <code class="docutils literal"><span class="pre">nresp</span></code> as a mean of the responses (default: None, i.e, 0)</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">A simulated data as a pandas dataframe with response followed by predictor as columns of the dataframe</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</div>
+<div class="section" id="module-simrel.version">
+<span id="simrel-version-module"></span><h2>simrel.version module<a class="headerlink" href="#module-simrel.version" title="Permalink to this headline">¶</a></h2>
+</div>
+<div class="section" id="module-simrel">
+<span id="module-contents"></span><h2>Module contents<a class="headerlink" href="#module-simrel" title="Permalink to this headline">¶</a></h2>
+<p>Sirmel is a package for simulating linear model data</p>
+</div>
+</div>
+
+
+           </div>
+           <div class="articleComments">
+            
+           </div>
+          </div>
+          <footer>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2018, Raju Rimal.
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'../',
+            VERSION:'0.5.4',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true,
+            SOURCELINK_SUFFIX: '.txt'
+        };
+    </script>
+      <script type="text/javascript" src="../_static/jquery.js"></script>
+      <script type="text/javascript" src="../_static/underscore.js"></script>
+      <script type="text/javascript" src="../_static/doctools.js"></script>
+
+  
+
+  
+  
+    <script type="text/javascript" src="../_static/js/theme.js"></script>
+  
+
+  
+  
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.StickyNav.enable();
+      });
+  </script>
+   
+
+</body>
+</html>
