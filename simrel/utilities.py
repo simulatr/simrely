@@ -23,9 +23,7 @@ def get_cov(pos, rsq, eta, p, lmd):
     pos = [x - 1 for x in pos]
     out = np.zeros(p)
     alpha_ = np.random.uniform(-1.0, 1.0, len(pos))
-    alpha = np.sign(alpha_) * np.sqrt(
-        rsq * np.abs(alpha_) / np.sum(np.abs(alpha_)) *
-        [lmd[int(ps)] for ps in pos] * eta)
+    alpha = np.sign(alpha_) * np.sqrt(rsq * np.abs(alpha_) / np.sum(np.abs(alpha_)) * [lmd[int(ps)] for ps in pos] * eta)
     out[pos] = alpha
     return out
 

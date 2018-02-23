@@ -106,7 +106,7 @@ class Simrel(object):
         try:
             out = np.diag(self.eigen_y)
         except AttributeError:
-            self.get_eigen(which='response')
+            self.get_eigen(predictor=False)
             out = np.diag(self.eigen_y)
         return out
 
@@ -122,7 +122,7 @@ class Simrel(object):
         try:
             out = np.diag(1 / self.eigen_x)
         except AttributeError:
-            self.get_eigen()
+            self.get_eigen(predictor=True)
             out = np.diag(1 / self.eigen_x)
         return out
 
@@ -238,8 +238,8 @@ class Unisimrel(Simrel):
 
         # Lets start computing different properties
         self.rotation_y = None
-        self.eigen_x = self.get_eigen("predictor")
-        self.eigen_y = self.get_eigen("response")
+        self.eigen_x = self.get_eigen(predictor=True)
+        self.eigen_y = self.get_eigen(predictor=False)
         self.sigma_z = self.get_sigmaz()
         self.sigma_zinv = self.get_sigmazinv()
         self.sigma_w = self.get_sigmaw()
@@ -265,7 +265,7 @@ class Unisimrel(Simrel):
         """
 
         if not hasattr(self, 'eigen_x'):
-            self.get_eigen()
+            self.get_eigen(predictor=True)
         sigma_zw = get_cov(pos=self.relpos, rsq=self.rsq, eta=self.eta,
                            p=self.npred, lmd=self.eigen_x)
         return sigma_zw
@@ -348,3 +348,6 @@ class Unisimrel(Simrel):
         """
 
         return self.sigma_w - self.rsq_y
+
+sobj = Unisimrel()
+train = sobj.get_data("train")
