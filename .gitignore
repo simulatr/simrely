@@ -17,3 +17,4 @@ __pycache__/
 venv/
 simrel/__pycache__
 conf.py
+docs/
