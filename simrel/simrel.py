@@ -10,7 +10,7 @@
 
 """
 
-from utilities import *
+from .utilities import *
 
 
 # noinspection PyUnresolvedReferences
