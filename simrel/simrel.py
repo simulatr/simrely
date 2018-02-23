@@ -13,13 +13,6 @@ import numpy as np
 import pandas as pd
 from utilities import *
 
-__title__ = 'simrel'
-__version__ = '0.1.0'
-__author__ = 'Raju Rimal'
-__license__ = 'MIT'
-__copyright__ = 'Copyright 2018 Raju Rimal'
-__docformat__ = 'restructuredtext'
-
 
 class Simrel(object):
     """Base class only containing common parameters and methods to compute common
