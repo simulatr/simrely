@@ -13,4 +13,6 @@
 from .version import __version__
 
 from .utilities import *
-from .simrel import Unisimrel
+from .base import *
+from .unisimrel import *
+from .multisimrel import *

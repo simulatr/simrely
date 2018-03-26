@@ -17,3 +17,5 @@ __pycache__/
 venv/
 simrel/__pycache__
 python*
+.ipynb_checkpoints
+simrel/.ipynb_checkpoints
