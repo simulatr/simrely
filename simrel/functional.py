@@ -2,6 +2,148 @@ import numpy as np
 from functools import reduce
 from collections import namedtuple
 
+'''
+Main Function: Simulate
+
+Extra Functions needed:
+    - sigma
+    - rotation_x
+    - rotattion_y
+'''
+def simulate(nobs, npred, sigma, nresp, rotation_x, rotation_y=None, mu_x=None, mu_y=None, random_state=None):
+    rotate_y = False if rotation_y is None else True
+    sigma_rot = np.linalg.cholesky(sigma)
+    rs = np.random.RandomState(random_state)
+    train_cal = rs.standard_normal(nobs * (npred + nresp))
+    train_cal = np.matmul(train_cal.reshape((nobs, nresp + npred)), sigma_rot)
+    z = train_cal[:, range(nresp, nresp + npred)]
+    w = train_cal[:, range(nresp)]
+    x = np.matmul(z, rotation_x.T)
+    y = np.matmul(w, rotation_y.T) if rotate_y else w
+    x = x + mu_x if mu_x is not None else x
+    y = y + mu_y if mu_y is not None else y
+    y = y.flatten() if y.shape[1] == 1 else y
+    data = namedtuple('data', "X Y")
+    out = data(X=x, Y=y)
+    return out
+
+'''
+Function: sigma
+
+Extra Functions needed:
+    - sigma_w
+    - sigma_z
+    - sigma_zw
+    - get_varcov
+'''
+def sigma(sigma_w, sigma_z, sigma_zw, rot_x, rot_y):
+    sigma_y = reduce(np.dot, [rot_y, sigma_w, rot_y.T])
+    sigma_x = reduce(np.dot, [rot_x, sigma_z, rot_x.T])
+    sigma_yx = reduce(np.dot, [rot_y, sigma_zw, rot_x.T])
+    sigma = get_varcov(sigma_y, sigma_x, sigma_yx)
+    return sigma
+
+'''
+Function: get_varcov
+'''
+def get_varcov(top_left, bottom_right, top_right=None, bottom_left=None):
+    if top_right is None and bottom_left is None:
+        raise ValueError("At least one covariance matrix must be given")
+    elif top_right is None:
+        top_right = np.transpose(bottom_left)
+    else:
+        bottom_left = np.transpose(top_right)
+    top_partition = np.concatenate((top_left, top_right), axis=1)
+    bottom_partition = np.concatenate((bottom_left, bottom_right), axis=1)
+    return np.concatenate((top_partition, bottom_partition))
+
+'''
+Function: sigma_w
+
+Extra Function needed:
+    - get_eigen_mat
+
+'''
+def sigma_part(eigen):
+    out = get_eigen_mat(eigen)
+    return out
+
+'''
+Function: get_eigen_mat
+
+Extra Function needed:
+    
+'''
+def get_eigen_mat(eigen_vec, inverse=False):
+    vec_ = [1 / x if inverse else x for x in eigen_vec]
+    return np.diag(vec_)
+
+'''
+Function: eigen
+'''
+
+def eigen(rate, nvar):
+    if rate < 0:
+        raise ValueError("Eigenvalue can not increase")
+    vec_ = range(1, nvar + 1)
+    return np.exp([-rate * float(p_) for p_ in vec_]) / np.exp(-rate)
+
+'''
+Function: get_cov
+
+Extra function needed:
+    - sample_alpha
+    
+Need to reform this function
+'''
+
+def get_cov(pos, rsq, kappa, m, p, lmd, random_state=None):
+    if not any([isinstance(x, list) for x in pos]):
+        pos = [pos]
+        rsq = [rsq]
+    out = np.zeros((m, p))
+    for idx in range(len(pos)):
+        lmd_i = lmd[list(pos[idx])]
+        kappa_i = kappa[idx]
+        out[[idx], pos[idx]] = sample_alpha(
+            pos[idx], rsq[idx], lmd_i, kappa_i,
+            random_state=random_state
+        )
+    return out
+
+'''
+Function: sample_alpha
+'''
+def sample_alpha(pos, rsq, lmd, kappa, random_state=None):
+    rs = np.random.RandomState(random_state)
+    alpha_ = rs.uniform(-1.0, 1.0, len(pos))
+    alpha_sign = np.sign(alpha_)
+    alpha_abs = np.abs(alpha_)
+    out = alpha_sign * np.sqrt((rsq * alpha_abs)/np.sum(alpha_abs) * kappa * lmd)
+    return out
+
+'''
+Function: get_rel_irrel
+'''
+def get_rel_irrel(npred, relpred, relpos, random_state=None):
+    if isinstance(relpred, (int, float)):
+        relpred = [relpred]
+        relpos = [relpos]
+    pred_pos = set(range(0, npred))
+    relpos = [set(x) for x in relpos]
+    irrel_pos = pred_pos - set.union(*relpos)
+    n_extra_pos = [x - y for x, y in zip(relpred,  (len(x) for x in relpos))]
+    rs = np.random.RandomState(random_state)
+    extra_pos = []
+    for i in range(len(n_extra_pos)):
+        extra_pos.append(set(rs.choice(list(irrel_pos), n_extra_pos[i], replace=False)))
+        irrel_pos = irrel_pos - set(extra_pos[i])
+    rel_pos = [set.union(x, y) for x, y in zip(relpos, extra_pos)]
+    return dict(rel=rel_pos, irrel=irrel_pos)
+
+'''
+Extra Function can be borrowed when needed:
+
 def sample_alpha(pos, rsq, lmd, kappa, random_state=None):
     rs = np.random.RandomState(random_state)
     alpha_ = rs.uniform(-1.0, 1.0, len(pos))
@@ -94,16 +236,9 @@ def get_rel_irrel(npred, relpred, relpos, random_state=None):
     irrel_pos = pred_pos - set.union(*relpos)
     n_extra_pos = [x - y for x, y in zip(relpred,  (len(x) for x in relpos))]
     rs = np.random.RandomState(random_state)
-    def sample_pos(pos, n, random_state=random_state):
-        rs = np.random.RandomState(random_state)
-        out = set(rs.choice(pos, n))
-        pos = set(pos) - out
-        return pos, out
-
     extra_pos = []
     for i in range(len(n_extra_pos)):
-        extra_pos.append(set(rs.choice(list(irrel_pos),
-                                       n_extra_pos[i], replace=False)))
+        extra_pos.append(set(rs.choice(list(irrel_pos), n_extra_pos[i], replace=False)))
         irrel_pos = irrel_pos - set(extra_pos[i])
     rel_pos = [set.union(x, y) for x, y in zip(relpos, extra_pos)]
     return dict(rel=rel_pos, irrel=irrel_pos)
@@ -128,3 +263,5 @@ def rotate_y(nresp, ypos, random_state=None):
     out = reduce(lambda mat, pos: get_rotate(mat, pos, random_state=random_state),
                  ypos, out)
     return out
+
+'''
