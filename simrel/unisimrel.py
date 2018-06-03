@@ -4,17 +4,15 @@ from collections import namedtuple
 from simrel.base import Simrel
 from simrel.utilities import *
 
+
 class Unisimrel(Simrel):
     def __init__(self, npred=10, nrelpred=5, relpos=(0, 1, 2), gamma=0.7, rsq=0.7,
-                 mu_x=None, mu_y=None, sim_type="univariate", random_state=None):
+                 mu_x=None, mu_y=None, random_state=None):
         super(Unisimrel, self).__init__(npred=npred, nrelpred=nrelpred,
                                         relpos=relpos, gamma=gamma, rsq=rsq,
                                         mu_x=mu_x, mu_y=mu_y, random_state=random_state,
                                         nresp=1, eta=0)
         self.rot_y = np.identity(self.nresp)
-
-    def set_seed(self, state):
-        self.rnd = state
 
     def sigma(self):
         sigma_y = reduce(np.dot, [self.rot_y, self.sigma_w, self.rot_y.T])
@@ -25,7 +23,7 @@ class Unisimrel(Simrel):
 
     def get_data(self, nobs, rnd=None):
         data = simulate(nobs, self.npred, self.sigma(), self.rot_x,
-                 self.nresp, self.rot_y, self.mu_x, self.mu_y, rnd)
+                        self.nresp, self.rot_y, self.mu_x, self.mu_y, rnd)
         return data
 
     def get_betaz(self):
@@ -45,7 +43,7 @@ class Unisimrel(Simrel):
         return np.float(beta0)
 
     def get_rsq(self):
-        sigma_zinv = np.diag(1/self.eigen_x)
+        sigma_zinv = np.diag(1 / self.eigen_x)
         beta_z = self.get_betaz()
         out = reduce(np.dot, [self.sigma_zw, beta_z.T])
         return np.float(out)

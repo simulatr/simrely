@@ -2,9 +2,10 @@ import numpy as np
 from functools import reduce
 from .utilities import *
 
+
 class Simrel(object):
     def __init__(self, npred=None, nrelpred=None, relpos=None,
-                 gamma=None, rsq=None, eta=None, nresp=None, ypos=None,
+                 gamma=None, rsq=None, eta=None, nresp=None,
                  mu_x=None, mu_y=None, random_state=None):
         self.rnd = random_state
         self.npred = npred
@@ -38,5 +39,3 @@ class Simrel(object):
         out = get_varcov(self.sigma_w, self.sigma_z,
                          top_right=self.sigma_zw.reshape((self.nresp, self.npred)))
         return out
-
-
