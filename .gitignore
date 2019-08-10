@@ -19,3 +19,5 @@ simrel/__pycache__
 python*
 .ipynb_checkpoints
 simrel/.ipynb_checkpoints
+.python-version
+.Rhistory

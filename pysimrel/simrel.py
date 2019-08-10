@@ -1,6 +1,9 @@
 import numpy as np
 from functools import reduce
 from collections import namedtuple
+import statsmodels.api as sm
+import statsmodels.multivariate as smm
+import statsmodels.formula.api as smf
 
 
 def sample_extra_pos(rs, n_extra_pos, extra_pos, irrel_pos):
@@ -17,7 +20,6 @@ def sample_extra_pos(rs, n_extra_pos, extra_pos, irrel_pos):
         return extra_pos, irrel_pos
     sample = set(rs.choice(list(irrel_pos), n_extra_pos[0], replace=False))
     return sample_extra_pos(rs, n_extra_pos[1:], extra_pos + [sample], irrel_pos - sample)
-
 
 def get_relpred(n_pred: int, n_relpred: list, pos_relcomp: list, random_state: int = None) -> dict:
     """
@@ -54,7 +56,6 @@ def get_relpred(n_pred: int, n_relpred: list, pos_relcomp: list, random_state: i
     rel = [set.union(*x) for x in zip(relpos, rel)]
     return dict(rel=rel, irrel=irrel)
 
-
 def get_eigen(rate: float, nvar: int, min_value: float = 1e-4) -> np.ndarray:
     """
     Compute eigen values using exponential decay function.
@@ -74,7 +75,6 @@ def get_eigen(rate: float, nvar: int, min_value: float = 1e-4) -> np.ndarray:
         raise ValueError("Parameter lambda.min must be in the interval [0,1]")
     out = (np.exp([-rate * float(p_) for p_ in vec_]) + nu) / (np.exp(-rate) + nu)
     return out
-
 
 def get_rotate(mat: np.ndarray, pred_pos: list, random_state=None) -> np.ndarray:
     """
@@ -97,7 +97,6 @@ def get_rotate(mat: np.ndarray, pred_pos: list, random_state=None) -> np.ndarray
     mat[[[x] for x in pred_pos], pred_pos] = q
     return mat
 
-
 def get_rotation(rel_irrel_pred: dict) -> np.ndarray:
     """
     Creates an orthogonal rotation matrix from dictionary of relevant and irrelevant
@@ -113,7 +112,6 @@ def get_rotation(rel_irrel_pred: dict) -> np.ndarray:
     mat = np.zeros((len(all_pos), len(all_pos)))
     return reduce(get_rotate, rel_irrel, mat)
 
-
 def sample_cov(lmd, rsq, pos, kappa, alpha_):
     """
     Compute covariance from a sample of uniform distribution satisfying `rsq`, a set of `lmd` and `kappa`
@@ -128,7 +126,6 @@ def sample_cov(lmd, rsq, pos, kappa, alpha_):
     out = np.zeros((n_pred,))
     out[pos] = np.sign(alpha_) * np.sqrt(rsq * np.abs(alpha_) / np.sum(np.abs(alpha_)) * lmd[pos] * kappa)
     return out
-
 
 def get_cov(rel_pos: list, rsq: list, kappa: list, lmd: list, random_seed=None):
     """
@@ -152,7 +149,6 @@ def get_cov(rel_pos: list, rsq: list, kappa: list, lmd: list, random_seed=None):
     cov_ = map(lambda x: sample_cov(lmd, rsq[x], list(rel_pos[x]), kappa[x], alpha_[x]), idx)
     mat[idx, :] = [*cov_]
     return mat
-
 
 class Simrel(object):
     def __init__(self, n_pred, n_resp, n_relpred, pos_relcomp, gamma, eta, rsq, sim_type, pos_resp):
@@ -248,7 +244,6 @@ class Simrel(object):
         out = data(X=x, Y=y)
         return out
 
-
 class Unisimrel(Simrel):
     def __init__(self, *args, **kwargs):
         super(Unisimrel, self).__init__(*args, **kwargs)
@@ -292,7 +287,6 @@ class Unisimrel(Simrel):
              self.covariances.cov_zw.T,
              self.properties.rotation_y.T]
         )
-
 
 class Multisimrel(Simrel):
     def __init__(self, *args, **kwargs):
@@ -342,11 +336,16 @@ class Multisimrel(Simrel):
              self.properties.rotation_y.T]
         )
 
-
 sobj1 = Unisimrel(10, 1, [4], [[0, 1, 2, 3]], 0.7, 0, [0.7], 'univariate', None)
 sobj1.compute_covariance()
-dta1 = sobj1.simulate_data(nobs=100)
-
 sobj2 = Multisimrel(10, 4, [3, 4], [[0, 1], [2, 3, 4]], 0.7, 0.1, [0.6, 0.8], "multivariate", [[0, 3], [1, 2]])
 sobj2.compute_covariance()
-dta2 = sobj2.simulate_data(nobs=100)
+
+## Analysis of Univariate data
+print(f"The True R2 value is {sobj1.parameters.rsq}")
+
+dta = sobj2.simulate_data(int(1e6), random_state = 123)
+
+X = dta.X
+Y = dta.Y
+Xt = np.transpose(X)

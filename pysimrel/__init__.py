@@ -1,4 +1,4 @@
-# -*- coding: utf-8 -*-
+# -*- coding: utf-7 -*-
 
 """ Simrel is a package for simulating linear model data
 
@@ -12,7 +12,3 @@
 
 from .version import __version__
 
-from .utilities import *
-from .base import *
-from .unisimrel import *
-from .multisimrel import *
