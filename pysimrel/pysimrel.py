@@ -1,5 +1,4 @@
-# from subclasses import *
-from functions import *
+from .functions import *
 from functools import reduce
 from typing import Union
 from dataclasses import dataclass, field
@@ -8,13 +7,63 @@ import numpy as np
 prm = Union[str, int]
 
 @dataclass(init = False)
-class Covariances():
+class Covariances:
+    """Class defining various covariances of the simulated data
+
+    This provides a nice graphical output of covariances.
+
+    Attributes
+    ----------
+    cov_ww: np.ndarray
+        Covariance matrix of latent components of response
+    cov_zz: np.ndarray
+        Covariance matrix of latent components of predictors
+    cov_zw: np.ndarray
+        Covariance matrix containing covariances between latent 
+        components of predictors and response
+    cov_yy: np.ndarray
+        Covariance matrix of response
+    cov_xx: np.ndarray
+        Covariance matrix of response
+    cov_xy: np.ndarray
+        Covariance matrix containing covariances between 
+        predictors and response
+
+    """
     cov_ww: np.ndarray
     cov_zz: np.ndarray
     cov_zw: np.ndarray
     cov_yy: np.ndarray
     cov_xx: np.ndarray
     cov_xy: np.ndarray
+
+    def __repr__(self):
+        ww = self.cov_ww.shape
+        zz = self.cov_zz.shape
+        zw = self.cov_zw.shape
+        wz = self.cov_zw.T.shape
+        yy = self.cov_yy.shape
+        xx = self.cov_xx.shape
+        xy = self.cov_xy.shape
+        yx = self.cov_xy.T.shape
+        return f"""
+        Numpy Arrays:
+        {'+'.ljust(14, '-')+'+'.ljust(20, '-')+'+'}
+        {'|'.ljust(14, ' ')+'|'.ljust(20, ' ')+'|'}
+        {'|'+'cov_ww'.center(13)+'|'+'cov_wz'.center(19)+'|'}
+        {'|'+'cov_yy'.center(13)+'|'+'cov_xy'.center(19)+'|'}
+        {'|'+str(yy).center(13)+'|'+str(yx).center(19)+'|'}
+        {'|'.ljust(14, ' ')+'|'.ljust(20, ' ')+'|'}
+        {'+'.ljust(14, '-')+'+'.ljust(20, '-')+'+'}
+        {'|'.ljust(14, ' ')+'|'.ljust(20, ' ')+'|'}
+        {'|'.ljust(14, ' ')+'|'.ljust(20, ' ')+'|'}
+        {'|'+'cov_zw'.center(13)+'|'+'cov_zz'.center(19)+'|'}
+        {'|'+'cov_xy'.center(13)+'|'+'cov_xx'.center(19)+'|'}
+        {'|'+str(xy).center(13)+'|'+str(xx).center(19)+'|'}
+        {'|'.ljust(14, ' ')+'|'.ljust(20, ' ')+'|'}
+        {'|'.ljust(14, ' ')+'|'.ljust(20, ' ')+'|'}
+        {'+'.ljust(14, '-')+'+'.ljust(20, '-')+'+'}
+        """
 
 @dataclass(init = False)
 class Properties:
@@ -32,6 +81,20 @@ class Properties:
     rotation_x: np.ndarray
     rotation_y: np.ndarray = None
 
+    def __repr__(self):
+        arr_items = {x: y for x, y in self.__dict__.items() if isinstance(y, np.ndarray)}
+        dict_items = {x: y for x, y in self.__dict__.items() if isinstance(y, dict)}
+        out = []
+        out.append("Numpy Arrays:")
+        out.append("".center(45, "-"))
+        for key, value in arr_items.items():
+            out.append(f'{str(key)+":":<25}{"Shape: "+str(value.shape):<20}')
+        out.append("\nDictionaries:")
+        out.append("".center(45, "-"))
+        for key, value in dict_items.items():
+            out.append(f'{key+":":<25}{"Keys: "+", ".join(value.keys()):<20}')
+        return '\n'.join(out)
+
 @dataclass
 class Data:
     X: np.ndarray
@@ -39,6 +102,22 @@ class Data:
 
 @dataclass
 class Simrel:
+    """Main Class for simulated objects
+
+    The class contains all the definitions of `simrel` objects. The class will also
+    provide necessary methods to compute various population properties.
+
+    Attributes
+    ----------
+    n_pred: Either integer or string
+      Number of predictor variables. Ex: `n_pred: 10`
+    n_relpred: Either integer or string
+      Number of relevant predictor variables for each response components
+      In the case of single response model, the parameters refers to the
+      number of predictors relevant for that single response
+
+    """
+
     n_pred: prm = 10
     n_relpred: prm = '4, 5'
     pos_relcomp: prm = '0, 1; 2, 3, 4'
@@ -57,6 +136,11 @@ class Simrel:
         self.covariances = Covariances()
 
     def parse_parameters(self):
+        """Parse the parameters passed during initilization
+        This method parse the parameters which are passed as string into
+        a nested list. It uses :func:`~pysimrel.parse_parm` function where further
+        documentation can be found.
+        """
         self.n_relpred = parse_param(self.n_relpred)
         self.n_relpred = [x for y in self.n_relpred for x in y]
         self.pos_relcomp = parse_param(self.pos_relcomp)
@@ -178,12 +262,13 @@ class Simrel:
         return out
 
 
-sobj1 = Simrel(n_pred = 10, n_relpred = 7, pos_relcomp = "0, 1, 2, 3", gamma = 0.7, rsq = 0.6, n_resp = 1, pos_resp="0")
-sobj1.parse_parameters()
-sobj1.compute_properties()
+# sobj1 = Simrel(n_pred = 10, n_relpred = 7, pos_relcomp = "0, 1, 2, 3", gamma = 0.7, rsq = 0.6, n_resp = 1, pos_resp="0")
+# sobj1.parse_parameters()
+# sobj1.compute_properties()
 
 
-sobj2 = Simrel()
-sobj2.parse_parameters()
-sobj2.compute_properties()
+# sobj2 = Simrel()
+# sobj2.parse_parameters()
+# sobj2.compute_properties()
 
+__name__ = "__main__" 

@@ -57,11 +57,11 @@ def get_relpred(n_pred, n_relpred, pos_relcomp, random_state = None):
     return dict(rel=rel, irrel=irrel)
 
 def get_eigen(rate, nvar, min_value = 1e-4):
-    """
-    Compute eigen values using exponential decay function.
+    """Compute eigen values using exponential decay function.
+    
     .. math::
-
         \lambda_i = \text{exp}^{-\gamma(i-1)}
+
     :param rate: rate of exponentail decay factor
     :param nvar: Number of variables (number of eigenvalues to compute)
     :param min_value: Lower limit for smallest eigenvalue
@@ -75,6 +75,7 @@ def get_eigen(rate, nvar, min_value = 1e-4):
         raise ValueError("Parameter lambda.min must be in the interval [0,1]")
     out = (np.exp([-rate * float(p_) for p_ in vec_]) + nu) / (np.exp(-rate) + nu)
     return out
+
 
 def get_rotate(mat, pred_pos, random_state=None):
     """
@@ -119,7 +120,7 @@ def sample_cov(lmd, rsq, pos, kappa, alpha_):
     :param rsq: Coefficient of determination
     :param pos: Position index of in which covariance need to be non-zero
     :param kappa: Eigenvalue corresponding to response (univariate) or response component (multivariate)
-    :param alpha_: A sample from univariate distribution between -1 and 1
+    :param alpha\_: A sample from univariate distribution between -1 and 1
     :return: An array of computed covariances of length equals to ``lmd``.
     """
     n_pred = len(lmd)
@@ -128,7 +129,7 @@ def sample_cov(lmd, rsq, pos, kappa, alpha_):
     return out
 
 def get_cov(rel_pos, rsq, kappa, lmd, random_seed=None):
-    """
+    """Compute Covariances
     Compute covariances at the position specified in ``rel_pos`` recursively using the
     function ``sample_cov`` satisfying the ``rsq`` and the eigen values in ``kappa`` and ``lmd``.
     :param rel_pos: position of relevant components
@@ -151,9 +152,18 @@ def get_cov(rel_pos, rsq, kappa, lmd, random_seed=None):
     return mat
 
 def parse_param(parm: Optional[prm]):
+    """Parse the parameters from string to a nested list
+    
+    Arguments:
+        parm {Optional[prm]} -- Either integer, float (in some cases) or mostly string
+    
+    Returns:
+        List -- A nested list
+    """
     if isinstance(parm, int) or isinstance(parm, float):
         return [[parm]]
     parm = parm.replace(" ", "").rstrip("[,;]")
     out = [[int(y) for y in x.split(",")] for x in parm.split(";")]
     return out
 
+__name__ = "__main__" 

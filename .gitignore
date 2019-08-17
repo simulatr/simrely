@@ -1,5 +1,5 @@
 # general things to ignore
-build/
+*build/
 dist/
 *.egg-info/
 *.egg
@@ -21,3 +21,4 @@ python*
 simrel/.ipynb_checkpoints
 .python-version
 .Rhistory
+

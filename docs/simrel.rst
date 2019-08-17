@@ -1,38 +1,12 @@
-simrel package
-==============
+Simrel
+==============================
 
-Submodules
-----------
+Simrel class creates object with provided parameters. It calculates all the necessary
+properties and provides necessary methods for simulating data.
 
-simrel.simrel module
---------------------
+.. automodule:: pysimrel
+   :members:
 
-.. automodule:: simrel.simrel
+.. autoclass:: Simrel
     :members:
-    :undoc-members:
-    :show-inheritance:
 
-simrel.utilities module
------------------------
-
-.. automodule:: simrel.utilities
-    :members:
-    :undoc-members:
-    :show-inheritance:
-
-simrel.version module
----------------------
-
-.. automodule:: simrel.version
-    :members:
-    :undoc-members:
-    :show-inheritance:
-
-
-Module contents
----------------
-
-.. automodule:: simrel
-    :members:
-    :undoc-members:
-    :show-inheritance:
