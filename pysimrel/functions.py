@@ -1,17 +1,26 @@
 from functools import reduce
-import numpy as np
 from typing import Union, Optional
+import numpy as np
 
-prm = Union[str, int]
+Prm = Union[str, int]
 
 def sample_extra_pos(rs, n_extra_pos, extra_pos, irrel_pos):
-    """
+    """Sample Extra Position Required
+
     Sample position index of extra relevant predictors from irrelevant predictors in ``irrel_pos``.
+
     :param rs: A numpy RandomSeed object
+    :type rs: int
     :param n_extra_pos: An integer for number of extra position index to sample
+    :type n_extra_pos: int
     :param extra_pos: A list container for collecting extra relevant components
+    :type extra_pos: list
     :param irrel_pos: A list or set of irrelevant position indices
-    :return: a list of relevant and irrelevant position indices
+    :type irrel_pos: list
+
+    :returns: a list of relevant and irrelevant position indices
+    :rtype: list
+
     """
 
     if not n_extra_pos:
@@ -19,19 +28,29 @@ def sample_extra_pos(rs, n_extra_pos, extra_pos, irrel_pos):
     sample = set(rs.choice(list(irrel_pos), n_extra_pos[0], replace=False))
     return sample_extra_pos(rs, n_extra_pos[1:], extra_pos + [sample], irrel_pos - sample)
 
-def get_relpred(n_pred, n_relpred, pos_relcomp, random_state = None):
-    """
-    Get relevant and irrelevant positon of predictor variables. The irrelevant
+
+def get_relpred(n_pred, n_relpred, pos_relcomp, random_state=None):
+
+    """Identify relevant predictors through sampling
+
+    Get relevant and irrelevant position of predictor variables. The irrelevant
     components index are the one which are not in ``pos_relcomp``. The number of extra components
     are defined in ``n_relpred``.
+
     :param n_pred: Number of predictor variables
+    :type n_pred: int
     :param n_relpred: List of number of predictors relevant for each response
+    :type n_relpred: list
     :param pos_relcomp: List of List containing the position index of relevant components
+    :type pos_relcomp: list
     :param random_state: An integer for random state
-    :return: A dictionary with relevant and irrelevant position index of predictors
+    :type random_state: int
+
+    :returns: A dictionary with relevant and irrelevant position index of predictors
+    :rtype: dict
+
     """
 
-    # n_relpred = [y for x in n_relpred for y in x]
     n_relcomp = [len(x) for x in pos_relcomp]
     if any([x < y for x, y in zip(n_relpred, n_relcomp)]):
         raise ValueError("Number of relevant predictors " \
@@ -56,17 +75,20 @@ def get_relpred(n_pred, n_relpred, pos_relcomp, random_state = None):
         rel = [set.union(*x) for x in zip(relpos, rel)]
     return dict(rel=rel, irrel=irrel)
 
-def get_eigen(rate, nvar, min_value = 1e-4):
-    """Compute eigen values using exponential decay function.
-    
-    .. math::
-        \lambda_i = \text{exp}^{-\gamma(i-1)}
 
-    :param rate: rate of exponentail decay factor
+def get_eigen(rate, nvar, min_value=1e-4):
+    """Compute eigen values using exponential decay function.
+
+    .. math::
+        \lambda_i = \\text{exp}^{-\gamma(i-1)}
+
+    :param rate: rate of exponential decay factor
     :param nvar: Number of variables (number of eigenvalues to compute)
     :param min_value: Lower limit for smallest eigenvalue
     :return: A list of eigenvalues
+
     """
+
     if rate < 0:
         raise ValueError("Eigenvalue can not increase, rate must be larger than zero.")
     vec_ = range(1, nvar + 1)
@@ -78,14 +100,20 @@ def get_eigen(rate, nvar, min_value = 1e-4):
 
 
 def get_rotate(mat, pred_pos, random_state=None):
-    """
-    Fill up a block of matrix ``mat`` based on position index in ``pred_pos``. The block
-    will be an orthogonal rotation matrix.
-    :param mat: A matrix possibily a square matrix as covariance
+    """Fill up a block of matrix ``mat`` based on position index in ``pred_pos``.
+    The block will be an orthogonal rotation matrix.
+
+    :param mat: A matrix possibly a square matrix as covariance
+    :type mat: np.array
     :param pred_pos: A list of position index for the block rotation
-    :param random_state:
-    :return: A matrix of same size as ``mat`` but filled with an orthogonal block
+    :type pred_pos: list
+    :param random_state: An integer for random state to control randomness
+    :type random_state: int
+    :returns: A matrix of same size as ``mat`` but filled with an orthogonal block
+    :rtype: np.array
+
     """
+
     n = len(pred_pos)
     if len(mat.shape) != 2:
         raise ValueError("'mat' must be a two dimensional array.")
@@ -97,6 +125,7 @@ def get_rotate(mat, pred_pos, random_state=None):
     q, r = np.linalg.qr(q_mat_scaled)
     mat[[[x] for x in pred_pos], pred_pos] = q
     return mat
+
 
 def get_rotation(rel_irrel_pred):
     """
@@ -113,6 +142,7 @@ def get_rotation(rel_irrel_pred):
     mat = np.zeros((len(all_pos), len(all_pos)))
     return reduce(get_rotate, rel_irrel, mat)
 
+
 def sample_cov(lmd, rsq, pos, kappa, alpha_):
     """
     Compute covariance from a sample of uniform distribution satisfying `rsq`, a set of `lmd` and `kappa`
@@ -127,6 +157,7 @@ def sample_cov(lmd, rsq, pos, kappa, alpha_):
     out = np.zeros((n_pred,))
     out[pos] = np.sign(alpha_) * np.sqrt(rsq * np.abs(alpha_) / np.sum(np.abs(alpha_)) * lmd[pos] * kappa)
     return out
+
 
 def get_cov(rel_pos, rsq, kappa, lmd, random_seed=None):
     """Compute Covariances
@@ -151,19 +182,20 @@ def get_cov(rel_pos, rsq, kappa, lmd, random_seed=None):
     mat[idx, :] = [*cov_]
     return mat
 
-def parse_param(parm: Optional[prm]):
+
+def parse_param(parm: Optional[Prm]):
     """Parse the parameters from string to a nested list
-    
-    Arguments:
-        parm {Optional[prm]} -- Either integer, float (in some cases) or mostly string
-    
-    Returns:
-        List -- A nested list
+
+    :param parm: Either integer, float (in some cases) or mostly string
+    :return: List -- A nested list
     """
+
     if isinstance(parm, int) or isinstance(parm, float):
         return [[parm]]
     parm = parm.replace(" ", "").rstrip("[,;]")
     out = [[int(y) for y in x.split(",")] for x in parm.split(";")]
     return out
 
-__name__ = "__main__" 
+
+if __name__ == "__main__":
+    pass

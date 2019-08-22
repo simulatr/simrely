@@ -4,9 +4,10 @@ from typing import Union
 from dataclasses import dataclass, field
 import numpy as np
 
-prm = Union[str, int]
+Prm = Union[str, int]
 
-@dataclass(init = False)
+
+@dataclass(init=False)
 class Covariances:
     """Class defining various covariances of the simulated data
 
@@ -48,24 +49,25 @@ class Covariances:
         yx = self.cov_xy.T.shape
         return f"""
         Numpy Arrays:
-        {'+'.ljust(14, '-')+'+'.ljust(20, '-')+'+'}
-        {'|'.ljust(14, ' ')+'|'.ljust(20, ' ')+'|'}
-        {'|'+'cov_ww'.center(13)+'|'+'cov_wz'.center(19)+'|'}
-        {'|'+'cov_yy'.center(13)+'|'+'cov_xy'.center(19)+'|'}
-        {'|'+str(yy).center(13)+'|'+str(yx).center(19)+'|'}
-        {'|'.ljust(14, ' ')+'|'.ljust(20, ' ')+'|'}
-        {'+'.ljust(14, '-')+'+'.ljust(20, '-')+'+'}
-        {'|'.ljust(14, ' ')+'|'.ljust(20, ' ')+'|'}
-        {'|'.ljust(14, ' ')+'|'.ljust(20, ' ')+'|'}
-        {'|'+'cov_zw'.center(13)+'|'+'cov_zz'.center(19)+'|'}
-        {'|'+'cov_xy'.center(13)+'|'+'cov_xx'.center(19)+'|'}
-        {'|'+str(xy).center(13)+'|'+str(xx).center(19)+'|'}
-        {'|'.ljust(14, ' ')+'|'.ljust(20, ' ')+'|'}
-        {'|'.ljust(14, ' ')+'|'.ljust(20, ' ')+'|'}
-        {'+'.ljust(14, '-')+'+'.ljust(20, '-')+'+'}
+        {'+'.ljust(14, '-') + '+'.ljust(20, '-') + '+'}
+        {'|'.ljust(14, ' ') + '|'.ljust(20, ' ') + '|'}
+        {'|' + 'cov_ww'.center(13) + '|' + 'cov_wz'.center(19) + '|'}
+        {'|' + 'cov_yy'.center(13) + '|' + 'cov_xy'.center(19) + '|'}
+        {'|' + str(yy).center(13) + '|' + str(yx).center(19) + '|'}
+        {'|'.ljust(14, ' ') + '|'.ljust(20, ' ') + '|'}
+        {'+'.ljust(14, '-') + '+'.ljust(20, '-') + '+'}
+        {'|'.ljust(14, ' ') + '|'.ljust(20, ' ') + '|'}
+        {'|'.ljust(14, ' ') + '|'.ljust(20, ' ') + '|'}
+        {'|' + 'cov_zw'.center(13) + '|' + 'cov_zz'.center(19) + '|'}
+        {'|' + 'cov_xy'.center(13) + '|' + 'cov_xx'.center(19) + '|'}
+        {'|' + str(xy).center(13) + '|' + str(xx).center(19) + '|'}
+        {'|'.ljust(14, ' ') + '|'.ljust(20, ' ') + '|'}
+        {'|'.ljust(14, ' ') + '|'.ljust(20, ' ') + '|'}
+        {'+'.ljust(14, '-') + '+'.ljust(20, '-') + '+'}
         """
 
-@dataclass(init = False)
+
+@dataclass(init=False)
 class Properties:
     eigen_x: np.ndarray
     eigen_y: np.ndarray
@@ -88,17 +90,19 @@ class Properties:
         out.append("Numpy Arrays:")
         out.append("".center(45, "-"))
         for key, value in arr_items.items():
-            out.append(f'{str(key)+":":<25}{"Shape: "+str(value.shape):<20}')
+            out.append(f'{str(key) + ":":<25}{"Shape: " + str(value.shape):<20}')
         out.append("\nDictionaries:")
         out.append("".center(45, "-"))
         for key, value in dict_items.items():
-            out.append(f'{key+":":<25}{"Keys: "+", ".join(value.keys()):<20}')
+            out.append(f'{key + ":":<25}{"Keys: " + ", ".join(value.keys()):<20}')
         return '\n'.join(out)
+
 
 @dataclass
 class Data:
     X: np.ndarray
     Y: np.ndarray
+
 
 @dataclass
 class Simrel:
@@ -118,25 +122,25 @@ class Simrel:
 
     """
 
-    n_pred: prm = 10
-    n_relpred: prm = '4, 5'
-    pos_relcomp: prm = '0, 1; 2, 3, 4'
+    n_pred: Prm = 10
+    n_relpred: Prm = '4, 5'
+    pos_relcomp: Prm = '0, 1; 2, 3, 4'
     gamma: float = 0.7
-    rsq: prm = '0.7, 0.8'
-    n_resp: prm = 4
+    rsq: Prm = '0.7, 0.8'
+    n_resp: Prm = 4
     eta: float = 0.7
-    pos_resp: prm = '0, 2; 1, 3'
-    mu_x: prm = None
-    mu_y: prm = None
-    parameter_parsed: bool = field(default = False, repr = False)
-    properties_computed: bool = field(default = False, repr = False)
+    pos_resp: Prm = '0, 2; 1, 3'
+    mu_x: Prm = None
+    mu_y: Prm = None
+    parameter_parsed: bool = field(default=False, repr=False)
+    properties_computed: bool = field(default=False, repr=False)
 
     def __post_init__(self):
         self.properties = Properties()
         self.covariances = Covariances()
 
     def parse_parameters(self):
-        """Parse the parameters passed during initilization
+        """Parse the parameters passed during initialization
         This method parse the parameters which are passed as string into
         a nested list. It uses :func:`~pysimrel.parse_parm` function where further
         documentation can be found.
@@ -271,4 +275,5 @@ class Simrel:
 # sobj2.parse_parameters()
 # sobj2.compute_properties()
 
-__name__ = "__main__" 
+if __name__ == "__main__":
+    pass

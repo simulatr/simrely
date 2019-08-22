@@ -2,24 +2,28 @@ import numpy as np
 from functools import reduce
 from collections import namedtuple
 
+
 ## Essential Function ----
 def bdiag(a_mat: np.ndarray, b_mat: np.ndarray) -> np.ndarray:
-  da   = a_mat.shape
-  db   = b_mat.shape
-  result = np.block([
-      [a_mat, np.zeros((da[0], db[1]))],
-      [np.zeros((da[1], db[2])), b_mat]
-  ])
-  return result
+    da = a_mat.shape
+    db = b_mat.shape
+    result = np.block([
+        [a_mat, np.zeros((da[0], db[1]))],
+        [np.zeros((da[1], db[2])), b_mat]
+    ])
+    return result
+
 
 def compute_eigen(i: int, decay: float) -> float:
-    return np.exp(-1 * decay * (i-1))
+    return np.exp(-1 * decay * (i - 1))
+
 
 def rotation_block(n: int) -> np.ndarray:
     Qmat = np.random.normal(size=(n, n))
-    Qmat_std = (Qmat - np.mean(Qmat))/np.std(Qmat)
+    Qmat_std = (Qmat - np.mean(Qmat)) / np.std(Qmat)
     q, r = np.linalg.qr(Qmat_std)
     return q
+
 
 ## R functions needs to be transferred ---
 # pred_pos <- function(relpos, p, q) {
@@ -71,10 +75,12 @@ def rotation_block(n: int) -> np.ndarray:
 
 ## Extra Properties Functions ----
 def beta_z(lmd: np.ndarray, cov_xy: np.ndarray) -> np.ndarray:
-    return np.matmul(np.diag(1/lmd), cov_xy)
+    return np.matmul(np.diag(1 / lmd), cov_xy)
+
 
 def beta(rot_x: np.ndarray, beta_z: np.ndarray, rot_y: np.ndarray) -> np.ndarray:
     return reduce(np.matmul, [rot_x, beta_z, rot_y])
+
 
 def beta0(beta: np.ndarray, mu_x: np.ndarray = None,
           mu_y: np.ndarray = None) -> np.ndarray:
@@ -85,38 +91,42 @@ def beta0(beta: np.ndarray, mu_x: np.ndarray = None,
         result -= np.matmul(np.transpose(beta), mu_x)
     return result
 
+
 def rsq_w(cov_zw: np.ndarray, lmd: np.ndarray, kappa: np.ndarray) -> np.ndarray:
-    var_w = np.diag(1/np.sqrt(kappa))
-    sigma_zinv = np.diag(1/lmd)
+    var_w = np.diag(1 / np.sqrt(kappa))
+    sigma_zinv = np.diag(1 / lmd)
     result = reduce(np.matmul, [var_w, np.transpose(cov_zw),
                                 sigma_zinv, cov_zw, var_w])
     return result
 
+
 def rsq_y(cov_zw: np.ndarray, kappa: np.ndarray, rot_y: np.ndarray) -> np.ndarray:
-    sigma_yy   = reduce(np.matmul, [np.transpose(rot_y), np.diag(kappa), rot_y])
-    sigma_zinv = np.diag(1/lmd)
-    var_y      = np.diag(1/np.sqrt(np.diag(sigma_yy)))
-    result     = reduce(np.matmul, [var_y, rot_y, np.transpose(cov_zw),
-                                    sigma_zinv, cov_zw, np.transpose(rot_y), var_y])
+    sigma_yy = reduce(np.matmul, [np.transpose(rot_y), np.diag(kappa), rot_y])
+    sigma_zinv = np.diag(1 / lmd)
+    var_y = np.diag(1 / np.sqrt(np.diag(sigma_yy)))
+    result = reduce(np.matmul, [var_y, rot_y, np.transpose(cov_zw),
+                                sigma_zinv, cov_zw, np.transpose(rot_y), var_y])
     return result
+
 
 def minerror(rot_y: np.ndarray, cov_zw: np.ndarray,
              lmd: np.ndarray, kappa: np.ndarray) -> np.ndarray:
-    sigma_ww   = np.diag(kappa)
-    sigma_zinv = np.diag(1/lmd)
-    expl_var   = reduce(np.matmul, [np.transpose(cov_zw), sigma_zinv, cov_zw])
+    sigma_ww = np.diag(kappa)
+    sigma_zinv = np.diag(1 / lmd)
+    expl_var = reduce(np.matmul, [np.transpose(cov_zw), sigma_zinv, cov_zw])
     reduce(np.matmul, [np.transpose(rot_y), (sigma_ww - expl_var), rot_y])
 
+
 def get_data(n: int, p: int, m: int, sigma: np.ndarray, rot_x: np.ndarray,
-             rot_y:np.ndarray = None, mu_x: np.ndarray = None,
+             rot_y: np.ndarray = None, mu_x: np.ndarray = None,
              mu_y: np.ndarray = None):
-    rotate_y  = rot_y is not None and ('rot_y' in locals())
+    rotate_y = rot_y is not None and ('rot_y' in locals())
     sigma_rot = np.linalg.cholesky(sigma)
-    data_cal  = np.matmul(np.array(np.random.normal(size = (n, m + p))), sigma_rot)
-    z         = train_cal[:, (m+1):(m+p)]
-    x         = np.matmul(z, np.transpose(rot_x))
-    w         = data_cal[:, 1:m]
-    y         = np.matmul(w, np.transpose(rot_y)) if rotate_y else w
+    data_cal = np.matmul(np.array(np.random.normal(size=(n, m + p))), sigma_rot)
+    z = train_cal[:, (m + 1):(m + p)]
+    x = np.matmul(z, np.transpose(rot_x))
+    w = data_cal[:, 1:m]
+    y = np.matmul(w, np.transpose(rot_y)) if rotate_y else w
 
     if mu_x is not None:
         x += mu_x
