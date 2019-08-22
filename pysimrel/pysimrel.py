@@ -1,4 +1,4 @@
-from .functions import *
+from .utilities import *
 from functools import reduce
 from typing import Union
 from dataclasses import dataclass, field

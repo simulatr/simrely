@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>Simrel &mdash; PySimrel 0.0.1 documentation</title>
+  <title>simrel package &mdash; simrel 0.5.5 documentation</title>
   
 
   
@@ -36,8 +36,7 @@
   <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
-    <link rel="next" title="Helper Functions" href="functions.html" />
-    <link rel="prev" title="Quickstart" href="quickstart.html" /> 
+    <link rel="prev" title="Simrel: Simulation of linear model data" href="index.html" /> 
 </head>
 
 <body class="wy-body-for-nav">
@@ -51,7 +50,7 @@
           
 
           
-            <a href="index.html" class="icon icon-home"> PySimrel
+            <a href="index.html" class="icon icon-home"> simrel
           
 
           
@@ -59,6 +58,10 @@
 
           
             
+            
+              <div class="version">
+                0.5.5
+              </div>
             
           
 
@@ -81,11 +84,15 @@
               
             
             
-              <p class="caption"><span class="caption-text">Content</span></p>
-<ul class="current">
-<li class="toctree-l1"><a class="reference internal" href="quickstart.html">Quickstart</a></li>
-<li class="toctree-l1 current"><a class="current reference internal" href="#">Simrel</a></li>
-<li class="toctree-l1"><a class="reference internal" href="functions.html">Helper Functions</a></li>
+              <ul class="current">
+<li class="toctree-l1 current"><a class="current reference internal" href="#">simrel package</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#submodules">Submodules</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#simrel-simrel-module">simrel.simrel module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#simrel-utilities-module">simrel.utilities module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#simrel-version-module">simrel.version module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#module-contents">Module contents</a></li>
+</ul>
+</li>
 </ul>
 
             
@@ -100,7 +107,7 @@
       <nav class="wy-nav-top" aria-label="top navigation">
         
           <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
-          <a href="index.html">PySimrel</a>
+          <a href="index.html">simrel</a>
         
       </nav>
 
@@ -131,7 +138,7 @@
     
       <li><a href="index.html">Docs</a> &raquo;</li>
         
-      <li>Simrel</li>
+      <li>simrel package</li>
     
     
       <li class="wy-breadcrumbs-aside">
@@ -150,52 +157,23 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
             
-  <div class="section" id="simrel">
-<h1>Simrel<a class="headerlink" href="#simrel" title="Permalink to this headline">¶</a></h1>
-<p>Simrel class creates object with provided parameters. It calculates all the necessary
-properties and provides necessary methods for simulating data.</p>
-<span class="target" id="module-pysimrel"></span><p>Simrel is a package for simulating linear model data</p>
-<dl class="class">
-<dt id="pysimrel.Simrel">
-<em class="property">class </em><code class="sig-prename descclassname">pysimrel.</code><code class="sig-name descname">Simrel</code><span class="sig-paren">(</span><em class="sig-param">n_pred: Union[str</em>, <em class="sig-param">int] = 10</em>, <em class="sig-param">n_relpred: Union[str</em>, <em class="sig-param">int] = '4</em>, <em class="sig-param">5'</em>, <em class="sig-param">pos_relcomp: Union[str</em>, <em class="sig-param">int] = '0</em>, <em class="sig-param">1; 2</em>, <em class="sig-param">3</em>, <em class="sig-param">4'</em>, <em class="sig-param">gamma: float = 0.7</em>, <em class="sig-param">rsq: Union[str</em>, <em class="sig-param">int] = '0.7</em>, <em class="sig-param">0.8'</em>, <em class="sig-param">n_resp: Union[str</em>, <em class="sig-param">int] = 4</em>, <em class="sig-param">eta: float = 0.7</em>, <em class="sig-param">pos_resp: Union[str</em>, <em class="sig-param">int] = '0</em>, <em class="sig-param">2; 1</em>, <em class="sig-param">3'</em>, <em class="sig-param">mu_x: Union[str</em>, <em class="sig-param">int] = None</em>, <em class="sig-param">mu_y: Union[str</em>, <em class="sig-param">int] = None</em>, <em class="sig-param">parameter_parsed: bool = False</em>, <em class="sig-param">properties_computed: bool = False</em><span class="sig-paren">)</span><a class="headerlink" href="#pysimrel.Simrel" title="Permalink to this definition">¶</a></dt>
-<dd><p>Main Class for simulated objects</p>
-<p>The class contains all the definitions of <cite>simrel</cite> objects. The class will also
-provide necessary methods to compute various population properties.</p>
-<dl class="attribute">
-<dt id="pysimrel.Simrel.n_pred">
-<code class="sig-name descname">n_pred</code><a class="headerlink" href="#pysimrel.Simrel.n_pred" title="Permalink to this definition">¶</a></dt>
-<dd><p>Number of predictor variables. Ex: <cite>n_pred: 10</cite></p>
-<dl class="field-list simple">
-<dt class="field-odd">Type</dt>
-<dd class="field-odd"><p>Either integer or string</p>
-</dd>
-</dl>
-</dd></dl>
-
-<dl class="attribute">
-<dt id="pysimrel.Simrel.n_relpred">
-<code class="sig-name descname">n_relpred</code><a class="headerlink" href="#pysimrel.Simrel.n_relpred" title="Permalink to this definition">¶</a></dt>
-<dd><p>Number of relevant predictor variables for each response components
-In the case of single response model, the parameters refers to the
-number of predictors relevant for that single response</p>
-<dl class="field-list simple">
-<dt class="field-odd">Type</dt>
-<dd class="field-odd"><p>Either integer or string</p>
-</dd>
-</dl>
-</dd></dl>
-
-<dl class="method">
-<dt id="pysimrel.Simrel.parse_parameters">
-<code class="sig-name descname">parse_parameters</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#pysimrel.Simrel.parse_parameters" title="Permalink to this definition">¶</a></dt>
-<dd><p>Parse the parameters passed during initialization
-This method parse the parameters which are passed as string into
-a nested list. It uses <code class="xref py py-func docutils literal notranslate"><span class="pre">parse_parm()</span></code> function where further
-documentation can be found.</p>
-</dd></dl>
-
-</dd></dl>
-
+  <div class="section" id="simrel-package">
+<h1>simrel package<a class="headerlink" href="#simrel-package" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="submodules">
+<h2>Submodules<a class="headerlink" href="#submodules" title="Permalink to this headline">¶</a></h2>
+</div>
+<div class="section" id="simrel-simrel-module">
+<h2>simrel.simrel module<a class="headerlink" href="#simrel-simrel-module" title="Permalink to this headline">¶</a></h2>
+</div>
+<div class="section" id="simrel-utilities-module">
+<h2>simrel.utilities module<a class="headerlink" href="#simrel-utilities-module" title="Permalink to this headline">¶</a></h2>
+</div>
+<div class="section" id="simrel-version-module">
+<h2>simrel.version module<a class="headerlink" href="#simrel-version-module" title="Permalink to this headline">¶</a></h2>
+</div>
+<div class="section" id="module-contents">
+<h2>Module contents<a class="headerlink" href="#module-contents" title="Permalink to this headline">¶</a></h2>
+</div>
 </div>
 
 
@@ -206,10 +184,8 @@ documentation can be found.</p>
   
     <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
       
-        <a href="functions.html" class="btn btn-neutral float-right" title="Helper Functions" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
       
-      
-        <a href="quickstart.html" class="btn btn-neutral float-left" title="Quickstart" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+        <a href="index.html" class="btn btn-neutral float-left" title="Simrel: Simulation of linear model data" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
       
     </div>
   
@@ -218,7 +194,7 @@ documentation can be found.</p>
 
   <div role="contentinfo">
     <p>
-        &copy; Copyright 2019, Raju Rimal
+        &copy; Copyright 2018, Raju Rimal
 
     </p>
   </div>

@@ -11,5 +11,5 @@
 # followed by any changes to the path and your own modules.
 
 from .version import __version__
-from .functions import *
+from .utilities import *
 from .pysimrel import *
