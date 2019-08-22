@@ -109,6 +109,7 @@ def get_rotate(mat, pred_pos, random_state=None):
     :type pred_pos: list
     :param random_state: An integer for random state to control randomness
     :type random_state: int
+
     :returns: A matrix of same size as ``mat`` but filled with an orthogonal block
     :rtype: np.array
 
@@ -128,13 +129,19 @@ def get_rotate(mat, pred_pos, random_state=None):
 
 
 def get_rotation(rel_irrel_pred):
-    """
+    """Create orthogonal rotation matrix
+
     Creates an orthogonal rotation matrix from dictionary of relevant and irrelevant
     positions using `get_rotate` function.
-    :param rel_irrel_pred: A dictionary of relevant and irrelevant position (possibly
-    obtained from the function `get_relpred`.
-    :return: An orthogonal rotation matrix
+
+    :param rel_irrel_pred: A dictionary of relevant and irrelevant position (possibly obtained from the function `get_relpred`.
+    :type rel_irrel_pred: dict
+
+    :returns: An orthogonal rotation matrix
+    :rtype: np.array
+
     """
+
     irrel = list(rel_irrel_pred['irrel'])
     rel = [list(x) for x in rel_irrel_pred['rel']]
     rel_irrel = [x for x in rel + [irrel] if x]
@@ -144,15 +151,26 @@ def get_rotation(rel_irrel_pred):
 
 
 def sample_cov(lmd, rsq, pos, kappa, alpha_):
-    """
+    """Compute covariance satisfying given parameters
+
     Compute covariance from a sample of uniform distribution satisfying `rsq`, a set of `lmd` and `kappa`
+
     :param lmd: A set of eigenvalue of predictors at position specified by ``pos``.
+    :type lmd: set or list
     :param rsq: Coefficient of determination
+    :type rsq: float
     :param pos: Position index of in which covariance need to be non-zero
+    :type pos: list
     :param kappa: Eigenvalue corresponding to response (univariate) or response component (multivariate)
-    :param alpha\_: A sample from univariate distribution between -1 and 1
-    :return: An array of computed covariances of length equals to ``lmd``.
+    :type kappa: list
+    :param alpha_: A sample from univariate distribution between -1 and 1
+    :type kappa: list
+
+    :returns: An array of computed covariances of length equals to ``lmd``.
+    :rtype: np.array
+
     """
+
     n_pred = len(lmd)
     out = np.zeros((n_pred,))
     out[pos] = np.sign(alpha_) * np.sqrt(rsq * np.abs(alpha_) / np.sum(np.abs(alpha_)) * lmd[pos] * kappa)
@@ -160,17 +178,29 @@ def sample_cov(lmd, rsq, pos, kappa, alpha_):
 
 
 def get_cov(rel_pos, rsq, kappa, lmd, random_seed=None):
+
     """Compute Covariances
+
     Compute covariances at the position specified in ``rel_pos`` recursively using the
     function ``sample_cov`` satisfying the ``rsq`` and the eigen values in ``kappa`` and ``lmd``.
+
     :param rel_pos: position of relevant components
+    :type rel_pos: list
     :param rsq: A list of coefficient of determination
+    :type rsq: list
     :param kappa: A list of eigenvalues related to response variables
+    :type kappa: list
     :param lmd: A list of eigenvalues related to predictor variables
+    :type lmd: list
     :param random_seed: An integer for random state
-    :return: A matrix of dimension equals to the length of ``kappa`` by length of ``lmd`` with
+    :type random_seed: int
+
+    :return: A matrix of dimension equals to the length of ``kappa`` by length of ``lmd`` with \
     computed covariances at the position specified in ``rel_pos``.
+    :rtype: np.array
+
     """
+
     n_pred = len(lmd)
     n_resp = len(kappa)
     mat = np.zeros((n_resp, n_pred))
@@ -187,7 +217,10 @@ def parse_param(parm: Optional[Prm]):
     """Parse the parameters from string to a nested list
 
     :param parm: Either integer, float (in some cases) or mostly string
-    :return: List -- A nested list
+    :type parm: str, int
+
+    :return: A nested list of parsed parameters
+    :rtype: list
     """
 
     if isinstance(parm, int) or isinstance(parm, float):

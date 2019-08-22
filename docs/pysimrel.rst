@@ -1,4 +1,4 @@
-PySimrel Modules
+Modules
 =====================================
 
 .. automodule:: pysimrel
@@ -6,29 +6,34 @@ PySimrel Modules
     :undoc-members:
     :show-inheritance:
 
-PySimrel Classes
+Classes
 =========================
 
 Simrel Class
 --------------------
 
-.. automodule:: pysimrel.Simrel
+.. autoclass:: pysimrel.Simrel
     :members:
-    :undoc-members:
-    :show-inheritance:
 
-PySimrel Utilities Functions
+Helper Classes
+--------------------
+
+.. autoclass:: pysimrel.Covariances
+    :members:
+
+.. autoclass:: pysimrel.Properties
+    :members:
+
+.. autoclass:: pysimrel.Data
+    :members:
+
+.. :undoc-members:
+.. :show-inheritance:
+
+Utilities Functions
 ==============================================
 
 .. automodule:: pysimrel.utilities
-    :members:
-    :undoc-members:
-    :show-inheritance:
-
-PySimrel Functions
----------------------
-
-.. automodule:: pysimrel.version
     :members:
     :undoc-members:
     :show-inheritance:

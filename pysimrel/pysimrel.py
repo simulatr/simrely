@@ -9,26 +9,23 @@ Prm = Union[str, int]
 
 @dataclass(init=False)
 class Covariances:
+
     """Class defining various covariances of the simulated data
 
     This provides a nice graphical output of covariances.
 
-    Attributes
-    ----------
-    cov_ww: np.ndarray
-        Covariance matrix of latent components of response
-    cov_zz: np.ndarray
-        Covariance matrix of latent components of predictors
-    cov_zw: np.ndarray
-        Covariance matrix containing covariances between latent 
-        components of predictors and response
-    cov_yy: np.ndarray
-        Covariance matrix of response
-    cov_xx: np.ndarray
-        Covariance matrix of response
-    cov_xy: np.ndarray
-        Covariance matrix containing covariances between 
-        predictors and response
+    :param cov_ww: Covariance matrix of latent components of response
+    :type cov_ww: np.ndarray
+    :param cov_zz: Covariance matrix of latent components of predictors
+    :type cov_zz: np.ndarray
+    :param cov_zw: Covariance matrix containing covariances between latent components of predictors and response
+    :type cov_zw: np.ndarray
+    :param cov_yy: Covariance matrix of response
+    :type cov_yy: np.ndarray
+    :param cov_xx: Covariance matrix of response
+    :type cov_xx: np.ndarray
+    :param cov_xy: Covariance matrix containing covariances between predictors and response
+    :type cov_xy: np.ndarray
 
     """
     cov_ww: np.ndarray
@@ -69,6 +66,36 @@ class Covariances:
 
 @dataclass(init=False)
 class Properties:
+    """A data class for different properties of simulated object
+
+    :param eigen_x: Eigenvalues corresponding to predictors
+    :type eigen_x: np.ndarray
+    :param eigen_y: Eigenvalues corresponding to responses
+    :type eigen_y: np.ndarray
+    :param relevant_predictors: Position index of relevant predictors for each responses
+    :type relevant_predictors: np.ndarray
+    :param sigma_latent: Variance-Covariance matrix of latent components of predictors and Responses
+    :type sigma_latent: np.ndarray
+    :param sigma: Variance-Covariance matrix of predictors and Responses
+    :type sigma: np.ndarray
+    :param beta_z: Regression coefficient corresponding to the principal components of predictors
+    :type beta_z: np.ndarray
+    :param beta: Regression coefficient corresponding to the predictor variables
+    :type beta: np.ndarray
+    :param beta0: Regression Intercept
+    :type beta0: np.ndarray
+    :param rsq_w: Coefficient of determination for latent component of responses (Variation explained by latent components of predictors on latent components of response)
+    :type rsq_w: np.ndarray
+    :param rsq: Coefficient of determination for responses (Variation explained by predictors on response)
+    :type rsq: np.ndarray
+    :param minerror: True minimum model error
+    :type minerror: np.ndarray
+    :param rotation_x: Rotation Matrix (eigenvector matrix) corresponding to predictors
+    :type rotation_x: np.ndarray
+    :param rotation_y: Rotation Matrix (eigenvector matrix) corresponding to response
+    :type rotation_y: np.ndarray = None
+
+    """
     eigen_x: np.ndarray
     eigen_y: np.ndarray
     relevant_predictors: np.ndarray
