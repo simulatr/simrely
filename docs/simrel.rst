@@ -8,5 +8,5 @@ properties and provides necessary methods for simulating data.
    :members:
 
 .. autoclass:: Simrel
-    :members:
+   :members:
 
