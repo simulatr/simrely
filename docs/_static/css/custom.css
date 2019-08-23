@@ -1,3 +1,10 @@
-.wy-nav-content {
-	max-width: 1200px !important;
+.wy-nav-content-wrap {
+	background-color: #fcfcfc;
 }
+
+.wy-nav-content {
+	width: 100%;
+	margin: auto;
+	background-color: #fcfcfc;
+}
+
