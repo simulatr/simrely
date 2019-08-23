@@ -6,7 +6,9 @@ Contents:
 .. toctree::
    :maxdepth: 2
 
-   pysimrel
+   Modules
+   Classes
+   Utility Functions
 
 
 Indices and tables

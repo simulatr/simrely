@@ -1,11 +1,3 @@
-Modules
-=====================================
-
-.. automodule:: pysimrel
-    :members:
-    :undoc-members:
-    :show-inheritance:
-
 Classes
 =========================
 
@@ -29,13 +21,5 @@ Helper Classes
 
 .. :undoc-members:
 .. :show-inheritance:
-
-Utilities Functions
-==============================================
-
-.. automodule:: pysimrel.utilities
-    :members:
-    :undoc-members:
-    :show-inheritance:
 
 
